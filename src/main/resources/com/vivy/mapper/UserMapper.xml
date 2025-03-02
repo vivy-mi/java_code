@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--接口全路径名-->
+<mapper namespace="com.vivy.mapper.UserMapper">
+
+    <resultMap id="userResultMap" type="User">
+        <result column="user_id" property="userId"></result>
+        <result column="user_name" property="userName"></result>
+    </resultMap>
+
+    <select id="selectUser" resultType="com.vivy.pojo.User" resultMap="userResultMap">
+        select *
+        from tb_user
+        where user_id = #{userId} and password = #{password}
+    </select>
+
+
+</mapper>

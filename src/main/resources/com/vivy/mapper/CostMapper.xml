@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--接口全路径名-->
+<mapper namespace="com.vivy.mapper.CostMapper">
+
+    <resultMap id="costResultMap" type="Cost">
+        <result column="cost_id" property="costId"></result>
+        <result column="departure_date" property="departureDate"></result>
+        <result column="return_date" property="returnDate"></result>
+        <result column="start_fare" property="startFare"></result>
+        <result column="return_fare" property="returnFare"></result>
+        <result column="schedule_reason" property="scheduleReason"></result>
+    </resultMap>
+
+
+    <insert id="add"  useGeneratedKeys="true" keyProperty="id" >
+        insert into tb_cost(cost_id,name,department,destination,departure_date,return_date,reason,start_fare,return_fare,foodallowance,localtrans,accommodation,totalamount)
+        values (#{costId},#{name},#{department},#{destination},#{departureDate},#{returnDate},#{reason},#{startFare},#{returnFare},#{foodallowance},#{localtrans},#{accommodation},#{totalamount});
+    </insert>
+
+    <select id="selectByUser" resultType="com.vivy.pojo.Application" resultMap="costResultMap">
+        select *
+        from tb_cost
+        where name = #{name} and department = #{department}
+    </select>
+
+    <select id="selectById" resultType="com.vivy.pojo.Cost" resultMap="costResultMap">
+        select *
+        from tb_cost
+        where id = #{id}
+    </select>
+
+    <update id="update">
+        update tb_cost
+        <set>
+            <if test="destination != null and destination != '' ">
+                destination = #{destination},
+            </if>
+            <if test="departureDate != null and departureDate != '' ">
+                departure_date = #{departureDate},
+            </if>
+            <if test="returnDate != null and returnDate != '' ">
+                return_date = #{returnDate},
+            </if>
+            <if test="reason != null and reason != '' ">
+                reason = #{reason},
+            </if>
+            <if test="startFare != null and startFare != '' ">
+                start_fare = #{startFare},
+            </if>
+            <if test="returnFare != null">
+                return_fare = #{returnFare},
+            </if>
+            <if test="foodallowance != null">
+                foodallowance = #{foodallowance},
+            </if>
+            <if test="localtrans != null">
+                localtrans = #{localtrans},
+            </if>
+            <if test="accommodation != null">
+                accommodation = #{accommodation},
+            </if>
+            <if test="totalamount != null">
+                totalamount = #{totalamount},
+            </if>
+        </set>
+        where id = #{id};
+    </update>
+
+</mapper>
